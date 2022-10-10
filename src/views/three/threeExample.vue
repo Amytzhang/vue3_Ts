@@ -5,7 +5,7 @@
  </div>
 </template>
 
-<script  lang="module">
+<script  lang="ts">
 import {TrackballControls,CSS3DRenderer, CSS3DObject } from 'three';
 export default {
   name:'threeExample',
