@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <p @click="namespaceTry">namespaceTry</p>
+    <!-- <p @click="namespaceTry">namespaceTry</p> -->
     <!-- <h1>{{ msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
@@ -35,7 +35,7 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import {b} from './index'
+// import {b} from './index'
 export default defineComponent({
   name: 'HelloWorld',
   props: {
@@ -43,13 +43,13 @@ export default defineComponent({
   },
  setup() {
   
-  let namespaceTry=():void =>{
-    let class1 = new b.animal()
-    class1.eat()
-  }
-  return {
-    namespaceTry
-  }
+  // let namespaceTry=():void =>{
+  //   let class1 = new b.animal()
+  //   class1.eat()
+  // }
+  // return {
+  //   namespaceTry
+  // }
  }
 
 
