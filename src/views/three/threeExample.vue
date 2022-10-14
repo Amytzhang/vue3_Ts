@@ -1,105 +1,76 @@
 <template>
- <div>
-   <div id="container"></div>
-		<div id="blocker"></div>
+ <div class="example" id="threeContent" >
+   <canvas class="threeExample"></canvas>
+	
  </div>
 </template>
 
-<script  lang="ts">
-// import {TrackballControls,CSS3DRenderer, CSS3DObject } from 'three';
+<script  lang="module">
+
+import * as THREE from 'three';
+import {TrackballControls,CSS3DRenderer, CSS3DObject } from 'three';
 export default {
   name:'threeExample',
   data () {
     return {
-       camera:'',
-        scene:'', renderer:'',controls:''
     }
   },
-  created () {
-  //  this.init();
-	//  this.animate();
- },
-  // methods: {
-  //   Element( id, x, y, z, ry ) {
+  mounted () {
+	this.init()
+	},
+  methods: {
+   init() {
+		const canvas = document.querySelector('canvas.threeExample');
+		// 定义渲染尺寸
+		const sizes = {
+		  width: document.getElementById('threeContent').clientWidth,
+		  height: document.getElementById('threeContent').clientHeight
+		}
 
-	// 			const div = document.createElement( 'div' );
-	// 			div.style.width = '480px';
-	// 			div.style.height = '360px';
-	// 			div.style.backgroundColor = '#000';
+		const renderer = new THREE.WebGLRenderer({ canvas: canvas });
+		renderer.setSize(sizes.width, sizes.height);
+		renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-	// 			const iframe = document.createElement( 'iframe' );
-	// 			iframe.style.width = '480px';
-	// 			iframe.style.height = '360px';
-	// 			iframe.style.border = '0px';
-	// 			iframe.src = [ 'https://www.youtube.com/embed/', id, '?rel=0' ].join( '' );
-	// 			div.appendChild( iframe );
+		// 初始化场景
+		const scene = new THREE.Scene();
 
-	// 			const object = new CSS3DObject( div );
-	// 			object.position.set( x, y, z );
-	// 			object.rotation.y = ry;
+		// 初始化相机
+		const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+		camera.position.z = 3
+		scene.add(camera);
 
-	// 			return object;
+		// 创建网格对象
+		const geometry = new THREE.BoxGeometry(1, 1, 1);
+		const material = new THREE.MeshBasicMaterial({ color: 0x03c03c });
+		const mesh = new THREE.Mesh(geometry, material);
+		scene.add(mesh);
 
-  //     },
-  //     init() {
+		// 页面缩放事件监听
+		window.addEventListener('resize', () => {
+		  sizes.width = window.innerWidth;
+		  sizes.height = window.innerHeight;
+		  // 更新渲染
+		  renderer.setSize(sizes.width, sizes.height);
+		  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+		  // 更新相机
+		  camera.aspect = sizes.width / sizes.height;
+		  camera.updateProjectionMatrix();
+		});
 
-	// 			const container = document.getElementById( 'container' );
-
-	// 		  this.camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
-	// 			this.camera.position.set( 500, 350, 750 );
-
-	// 			this.scene = new THREE.Scene();
-
-	// 			this.renderer = new CSS3DRenderer();
-	// 			this.renderer.setSize( window.innerWidth, window.innerHeight );
-	// 			container.appendChild( this.renderer.domElement );
-
-	// 			const group = new THREE.Group();
-	// 			group.add( this.Element( 'SJOz3qjfQXU', 0, 0, 240, 0 ) );
-	// 			group.add( this.Element( 'Y2-xZ-1HE-Q', 240, 0, 0, Math.PI / 2 ) );
-	// 			group.add( this.Element( 'IrydklNpcFI', 0, 0, - 240, Math.PI ) );
-	// 			group.add( this.Element( '9ubytEsCaS0', - 240, 0, 0, - Math.PI / 2 ) );
-	// 			this.scene.add( group );
-
-	// 			this.controls = new TrackballControls( this.camera, this.renderer.domElement );
-	// 			this.controls.rotateSpeed = 4;
-
-	// 			window.addEventListener( 'resize', this.onWindowResize );
-
-	// 			// Block iframe events when dragging camera
-
-	// 			const blocker = document.getElementById( 'blocker' );
-	// 			blocker.style.display = 'none';
-
-	// 			this.controls.addEventListener( 'start', function () {
-
-	// 				blocker.style.display = '';
-
-	// 			} );
-	// 			this.controls.addEventListener( 'end', function () {
-
-	// 				blocker.style.display = 'none';
-
-	// 			} );
-
-	// 		},
-
-	// 		onWindowResize() {
-
-	// 			this.camera.aspect = window.innerWidth / window.innerHeight;
-	// 			this.camera.updateProjectionMatrix();
-	// 			this.renderer.setSize( window.innerWidth, window.innerHeight );
-
-	// 		},
-
-	// 	animate() {
-
-	// 			requestAnimationFrame( this.animate );
-	// 			this.controls.update();
-	// 			this.renderer.render( this.scene, this.camera);
-
-	// 		}
-  // },
+		// 动画
+		const tick = () => {
+		  // 更新渲染器
+		  renderer.render(scene, camera);
+		  // 给网格模型添加一个转动动画
+		  mesh && (mesh.rotation.y += .02);
+		  mesh && (mesh.rotation.x += .02);
+		  // 页面重绘时调用自身
+		  window.requestAnimationFrame(tick);
+		}
+		tick();
+		}
+		
+  },
   components:{
 
   }
@@ -108,5 +79,15 @@ export default {
 </script>
 
 <style scoped>
-
+.example{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+.threeExample {
+  position: relative;
+  top: 0;
+  left: 0;
+  outline: none;
+}
 </style>

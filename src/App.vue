@@ -4,7 +4,9 @@
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
       <router-link to="/interview">interview</router-link>
-      <!-- <router-link to="/three">three</router-link> -->
+      <router-link to="/slot">slot</router-link>
+      <router-link to="/virtual">virtual</router-link>
+      <router-link to="/three">three</router-link>
     </div>
     <div class="content">
       <router-view/>
@@ -24,7 +26,9 @@ export default {
 
 <style lang="scss">
 $top-padding:50px;
-$content-color:#f1f2f3;
+$content-color:rgba(255, 255, 255, 0.3);
+$nav-color:rgb(255, 255, 255);
+$nav-background:#141414;
 html,body {
   width: 100%;
   height: 100%;
@@ -63,13 +67,14 @@ html,body {
   height: 100wh;
   padding: $top-padding 0;
   box-sizing: border-box;
-  background-image: linear-gradient(to right, rgba(37,198,215,0),rgba(37,198,215,1));
-    display: flex;
-    flex-direction: column;
+  background-color:$nav-background;
+  display: flex;
+  flex-direction: column;
   a {
     font-weight: bold;
-    color: #ffffff;
+    color: $nav-color;
     font-size: 2rem;
+
     &.router-link-exact-active {
       color: #f70707;
     }
