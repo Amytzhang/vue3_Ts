@@ -3,16 +3,19 @@
    <div class="show">
       <three-example></three-example>
    </div>
-   <div class="show"></div>
+   <div class="show">
+     <trye></trye>
+   </div>
   </div>
 </template>
 <script lang="ts">
-import threeExample from './threeExample.vue'
-
+import threeExample from './threeExample.vue';
+import trye from './try.vue';
 export default {
   name:'three',
   components:{
-    threeExample
+    threeExample,
+    trye
   }
 }
 </script>
@@ -23,9 +26,10 @@ export default {
   height: 100%;
   overflow: hidden;
   display: flex;
+  justify-content: space-around;
 }
 .show{
-    flex: 1;
-  }
+  flex: 1;
+}
 
 </style>

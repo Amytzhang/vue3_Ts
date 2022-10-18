@@ -47,8 +47,8 @@ export default {
 
 		// 页面缩放事件监听
 		window.addEventListener('resize', () => {
-		  sizes.width = window.innerWidth;
-		  sizes.height = window.innerHeight;
+		  sizes.width = document.getElementById('threeContent').clientWidth;
+		  sizes.height = document.getElementById('threeContent').clientHeight;
 		  // 更新渲染
 		  renderer.setSize(sizes.width, sizes.height);
 		  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
