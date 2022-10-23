@@ -1,6 +1,6 @@
 <template>
   <div id="point">
-    <!-- <canvas class="pointExample"></!--> -->
+    <!-- <canvas class="pointExample"></!--> 
   </div>
 </template>
 

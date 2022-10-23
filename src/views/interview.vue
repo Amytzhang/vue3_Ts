@@ -1,7 +1,7 @@
 <template>
    <div class="interview-content">
-    <div @click="say()">{{message}}</div>
-    <Select v-model="model" filterable allow-create @on-create="handleCreate1">
+    <div class="active-click" @click="say()">{{message}}</div>
+    <Select v-model="model" filterable allow-create @on-create="handleCreate1" style="width:10rem;">
       <Option v-for="item in cityList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
     </Select>
    </div>
@@ -88,11 +88,20 @@ import hello from '../mixins/hello'
         }
     }
 </script>
-<style >
+<style lang="scss" scoped>
   .interview-content{
-    width: 200px;
-    height: 500px;
-   
+    width: 100%;
+    height: 100%;
+    padding: 10rem 5rem;
+   .active-click{
+      height: 4rem;
+      line-height: 4rem;
+      font-size: 16px;
+      font-weight: 600;
+      &:active{
+        color: burlywood;
+      }
+   }
   }
 </style>
 

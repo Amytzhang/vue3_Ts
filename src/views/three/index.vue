@@ -4,16 +4,19 @@
       <el-breadcrumb separator="/">
         <el-breadcrumb-item 
            v-for="(child,cIndex) in threelist.children" 
+           :tabindex="cIndex"
            :to="(`${threelist.path}`+child?.path)">{{child?.name}}
         </el-breadcrumb-item>
       </el-breadcrumb>
     </div>
    <div class="show">
-      <router-view></router-view>
+    
+      <router-view></router-view> 
    </div>
   </div>
 </template>
 <script  lang="ts" setup>
+
 interface typeOne {
   path?:string,
   name?:string,
@@ -44,8 +47,8 @@ interface routerMessage extends typeOne {
 .show{
   flex: 1;
   .side-bread{
-    height: 50px;
-    width: 100%;
+    height: 50vw;
+    width: 50vh;
   }
 }
 
