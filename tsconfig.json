@@ -16,7 +16,8 @@
    
     "types": [
       "webpack-env",
-      "node"
+      "node",
+      "element-plus/global"
     ],
     "paths": {
       "@/*": [

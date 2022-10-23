@@ -1,5 +1,5 @@
 <template>
-<div id="app">
+<div class="virtual-show">
 <div>虚拟列表</div>
   <VirtualList :listData="data" :itemSize="100"/>
 </div>
@@ -25,7 +25,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 html{
   height: 100%;
 }
@@ -33,7 +33,12 @@ body{
   height: 100%;
   margin:0;
 }
-#app{
-  height:100%;
+.virtual-show{
+  width:50vw;
+  height:50vh;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
 </style>

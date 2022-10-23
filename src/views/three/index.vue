@@ -1,35 +1,52 @@
 <template>
   <div class="three_index">
+    <div class="side-bread">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item 
+           v-for="(child,cIndex) in threelist.children" 
+           :to="(`${threelist.path}`+child?.path)">{{child?.name}}
+        </el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
    <div class="show">
-      <three-example></three-example>
-   </div>
-   <div class="show">
-     <trye></trye>
+      <router-view></router-view>
    </div>
   </div>
 </template>
-<script lang="ts">
-import threeExample from './threeExample.vue';
-import trye from './try.vue';
-export default {
-  name:'three',
-  components:{
-    threeExample,
-    trye
-  }
+<script  lang="ts" setup>
+interface typeOne {
+  path?:string,
+  name?:string,
+  icon?:string,
 }
+interface routerMessage extends typeOne {
+  children?:Array<typeOne>
+}
+  const threelist:routerMessage ={path:'/three',name:'Three.js',
+    children:[
+      {path:'/threeExample',name:'threeExample'},
+      {path:'/trye',name:'trye'},
+      {
+        path:'/point',name:'point'
+      }
+    ]
+  }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .three_index{
   width: 100%;
   height: 100%;
   overflow: hidden;
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
 }
 .show{
   flex: 1;
+  .side-bread{
+    height: 50px;
+    width: 100%;
+  }
 }
 
 </style>

@@ -3,7 +3,7 @@ import Home from '../views/Home.vue'
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/',
+    path: '/home',
     name: 'Home',
     component: Home
   },
@@ -32,7 +32,24 @@ const routes: Array<RouteRecordRaw> = [
   {
     path:'/three',
     name:'three',
-    component: () => import(/* webpackChunkName: "about" */ '../views/three/index.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/three/index.vue'),
+    children:[
+      {
+        path:'trye',
+        name: 'trye',
+        component: () => import(/* webpackChunkName: "about" */ '../views/three/try.vue'),
+      },
+      {
+        path:'threeExample',
+        name: 'threeExample',
+        component: () => import(/* webpackChunkName: "about" */ '../views/three/threeExample.vue'),
+      },
+      {
+        path:'point',
+        name: 'point',
+        component: () => import(/* webpackChunkName: "about" */ '../views/three/point.vue'),
+      }
+    ]
   },{
     path:'/virtual',
     name:'virtual',
