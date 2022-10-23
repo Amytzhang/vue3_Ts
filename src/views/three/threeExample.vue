@@ -5,7 +5,7 @@
  </div>
 </template>
 
-<script  lang="module">
+<script>
 
 import * as THREE from 'three';
 import {TrackballControls,CSS3DRenderer, CSS3DObject } from 'three';

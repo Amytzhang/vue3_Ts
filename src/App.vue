@@ -64,6 +64,12 @@ const data:Array<routerMessage>=[
         path:'/point',name:'point'
       }
     ]
+  },
+  {
+    path:'/tsVue3',
+    name:'vue和ts语法结合',
+    children:[
+    ]
   }
 ]
 const isCollapse = ref(false)

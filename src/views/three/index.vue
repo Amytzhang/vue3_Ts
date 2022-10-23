@@ -13,6 +13,7 @@
     
       <router-view></router-view> 
    </div>
+   
   </div>
 </template>
 <script  lang="ts" setup>
@@ -44,12 +45,19 @@ interface routerMessage extends typeOne {
   display: flex;
   flex-direction: column;
 }
+.side-bread{
+   height: 4rem;
+   line-height: 4rem;
+   width: 100%;
+   padding: 1rem 0 0 1rem;
+   box-sizing: border-box;
+   background: rgba(139, 185, 231, .5);;
+   .el-breadcrumb{
+     font-size: 1.5rem;
+   }
+  }
 .show{
   flex: 1;
-  .side-bread{
-    height: 50vw;
-    width: 50vh;
-  }
 }
 
 </style>

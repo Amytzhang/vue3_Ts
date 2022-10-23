@@ -54,6 +54,11 @@ const routes: Array<RouteRecordRaw> = [
     path:'/virtual',
     name:'virtual',
     component:() => import('../views/Virtual.vue')
+  },
+  {
+    path:'/tsVue3',
+    name:'tsVue3',
+    component:() => import('../views/ts_vue3/index.vue')
   }
 ]
 
