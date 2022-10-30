@@ -36,7 +36,7 @@ export default {
       //设置鼠标控制  第二个参数是鼠标作用的对象
       const orbit = new OrbitControls(camera,renderer.domElement)
 
-      camera.position.set(0,2,5)
+      camera.position.set(0,2,3)
       orbit.update();
       //坐标轴辅助线
       const axesHelper = new THREE.AxesHelper(5)
@@ -50,8 +50,8 @@ export default {
 
       //设置平板
 		  const planeGeometry = new THREE.PlaneGeometry(30,30);
-      //材料设置双面
-		  const planeMaterial = new THREE.MeshBasicMaterial(
+      //材料设置双面 standard材质吸收光
+		  const planeMaterial = new THREE.MeshStandardMaterial(
         { color:0xFFFFFF,
           side: THREE.DoubleSide
         });
@@ -64,21 +64,22 @@ export default {
 
 
       //设置网格
-      const gridHelper = new THREE.GridHelper(30,30);
+      const gridHelper = new THREE.GridHelper(30);
       scene.add(gridHelper)
 
 
-      //添加球状结构
+      //添加球状结构 4 50 50
       const sphereGeometry = new THREE.SphereGeometry(4,50,50);
       //材料不一样效果不同MeshBasicMaterial
       //MeshStandardMaterial更暗
       const sphereMaterial = new THREE.MeshStandardMaterial({
         color:0x0000FF,
         wireframe:false,
+
       })
       const sphere = new THREE.Mesh(sphereGeometry,sphereMaterial)
       scene.add(sphere)
-       //设置图形位置
+       //设置图形位置 -10 10 0
       sphere.position.set(-10,10,0);
       //阴影相关
       sphere.castShadow = true;
@@ -88,27 +89,46 @@ export default {
       const ambientLight = new THREE.AmbientLight(0x333333);
       scene.add(ambientLight)
 
+
+
       //TODO 1设置定向光，设置颜色跟强度
-      const directionalLight = new THREE.DirectionalLight(0xFFFFFF,0.8);
-      scene.add(directionalLight);
-      directionalLight.position.set(-30,50,0);
-      directionalLight.castShadow = true;
-      directionalLight.shadow.camera.bottom = -12;
+      // const directionalLight = new THREE.DirectionalLight(0xFFFFFF,.8);
+      // scene.add(directionalLight);
+      // directionalLight.position.set(-30,40,0);
+      // directionalLight.castShadow = true;
+      // directionalLight.shadow.camera.bottom = -12;
 
 
       // TODO 1添加定向光源辅助
-      const dLightHelper = new THREE.DirectionalLightHelper(directionalLight,5);
-      scene.add(dLightHelper)
-      //TODO 1
-      const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
-      scene.add(dLightShadowHelper)
+      // const dLightHelper = new THREE.DirectionalLightHelper(directionalLight,5);
+      // scene.add(dLightHelper)
+      // TODO 1
+      // const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
+      // scene.add(dLightShadowHelper)
+
+
+      // TODO 2 聚光
+      const spotLight = new THREE.SpotLight(0xFFFFFF);
+      scene.add(spotLight)
+      spotLight.position.set(-100,100,0);
+      spotLight.castShadow = true;
+      //缩小灯光
+      spotLight.angle = 0.2;
+
+      const sLightHelper = new THREE.SpotLightHelper(spotLight);
+      scene.add(sLightHelper)
+
 
       //添加球状图像控制器
       const gui = new dat.GUI();
       const options = {
         sphereColor:'#ffea00',
         wireframe:false,
-        speed: 0.01
+        speed: 0.01,
+          //聚光
+        angle:0.2,
+        penumbar:0.01,
+        intensity:0.1
       }
       gui.addColor(options,'sphereColor').onChange(function(e){
         sphere.material.color.set(e)
@@ -118,6 +138,10 @@ export default {
       })
       //弹跳速度第三个参数设置最小数，第四个参数设置上限
       gui.add(options,'speed',0,0.1)
+
+      gui.add(options,'angle',0,1)
+      gui.add(options,'penumbar',0,1);
+      gui.add(options,'intensity',0,1)
 
     
      
@@ -130,11 +154,14 @@ export default {
         step+=options.speed;
         sphere.position.y = 10*Math.abs(Math.sin(step))
 
-
+        spotLight.angle = options.angle;
+        spotLight.penumbra = options.penumbar;
+        spotLight.intensity = options.intensity;
+        sLightHelper.update()
         renderer.render(scene,camera);
-        
+        renderer.setAnimationLoop(animate)
       }
-      renderer.setAnimationLoop(animate)
+     animate()
     }
   },
 }

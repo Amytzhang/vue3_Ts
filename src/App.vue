@@ -121,11 +121,11 @@ html,body {
 }
 
 #nav {
-  width: 12vw;
+  min-width: 7vw;
   height: 100wh;
 }
 .content {
-  width: 88vw;
+  flex: 1;
   overflow-y: scroll;
   background-color: $content-color;
  
