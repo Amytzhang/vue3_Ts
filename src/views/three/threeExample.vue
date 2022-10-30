@@ -36,14 +36,25 @@ export default {
 
 		// 初始化相机
 		const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-		camera.position.z = 3
+    camera.position.y = 2;
+		camera.position.z = 5;
 		scene.add(camera);
 
+		//设置坐标辅助线
+		const axesHelper = new THREE.AxesHelper(5)
+    scene.add(axesHelper)
+
 		// 创建网格对象
+		var grid3=new THREE.GridHelper(30,30,0xf0f0f0,0xffffff);
+		scene.add(grid3);
+
+		//设置3d物体
 		const geometry = new THREE.BoxGeometry(1, 1, 1);
 		const material = new THREE.MeshBasicMaterial({ color: 0x03c03c });
 		const mesh = new THREE.Mesh(geometry, material);
 		scene.add(mesh);
+
+	
 
 		// 页面缩放事件监听
 		window.addEventListener('resize', () => {
@@ -62,8 +73,8 @@ export default {
 		  // 更新渲染器
 		  renderer.render(scene, camera);
 		  // 给网格模型添加一个转动动画
-		  mesh && (mesh.rotation.y += .02);
-		  mesh && (mesh.rotation.x += .02);
+		  mesh && (mesh.rotation.y += .01);
+		  mesh && (mesh.rotation.x += .01);
 		  // 页面重绘时调用自身
 		  window.requestAnimationFrame(tick);
 		}

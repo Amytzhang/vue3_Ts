@@ -17,7 +17,8 @@
   </div>
 </template>
 <script  lang="ts" setup>
-
+import { ref } from 'vue'
+let activeIndex = ref(0)
 interface typeOne {
   path?:string,
   name?:string,
@@ -28,6 +29,7 @@ interface routerMessage extends typeOne {
 }
   const threelist:routerMessage ={path:'/three',name:'Three.js',
     children:[
+      {path:'/tubeOne',name:'youtube学习three1'},
       {path:'/threeExample',name:'threeExample'},
       {path:'/trye',name:'trye'},
       {

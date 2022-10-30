@@ -58,6 +58,7 @@ const data:Array<routerMessage>=[
   {path:'/virtual',name:'虚拟列表', children:[]},
   {path:'/three',name:'Three.js',
     children:[
+      {path:'/tubeOne',name:'youtube学习three1'},
       {path:'/threeExample',name:'threeExample'},
       {path:'/trye',name:'trye'},
       {

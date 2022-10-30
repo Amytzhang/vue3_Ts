@@ -4,6 +4,7 @@
     <Select v-model="model" filterable allow-create @on-create="handleCreate1" style="width:10rem;">
       <Option v-for="item in cityList3" :value="item.value" :key="item.value">{{ item.label }}</Option>
     </Select>
+    <div>{{interviewResult}}</div>
    </div>
 </template>
 <script>
@@ -13,6 +14,7 @@ import hello from '../mixins/hello'
       mixins: [hello],
         data () {
             return {
+                interviewResult:0,
                 cityList3: [
                     {
                         value: 'New York',
@@ -69,9 +71,9 @@ import hello from '../mixins/hello'
                 model1: []
             }
         },
-        // components: {
-        //   Select
-        // },
+        created() {
+            this.headleInterview()
+        },
         methods: {
             handleCreate1 (val) {
                 this.cityList3.push({
@@ -84,6 +86,12 @@ import hello from '../mixins/hello'
                     value: val,
                     label: val
                 });
+            },
+            headleInterview(){
+                let arr0 = [1, [2, 3], 4]
+                let str = '[a,[b],c]'
+                let translate = str.slice(0,str.length-1)
+                console.log('结果：',translate,typeof translate)
             }
         }
     }
