@@ -7,7 +7,7 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import { render } from '@vue/runtime-dom';
 import * as dat from 'dat.gui'
-import threeExampleVue from './threeExample.vue';
+
 
 export default {
   name: 'tubeOne',
@@ -25,11 +25,10 @@ export default {
       let height = document.getElementById('learn_one').clientHeight;
 
       const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(width,height);
       //设置阴影
       renderer.shadowMap.enabled = true;
-      renderer.setSize(width,height);
       
-
       document.getElementById('learn_one').appendChild(renderer.domElement);
 
       const scene = new THREE.Scene();
@@ -80,7 +79,7 @@ export default {
       const sphere = new THREE.Mesh(sphereGeometry,sphereMaterial)
       scene.add(sphere)
        //设置图形位置
-      sphere.position.set(-10,-10,0);
+      sphere.position.set(-10,10,0);
       //阴影相关
       sphere.castShadow = true;
 
@@ -89,16 +88,18 @@ export default {
       const ambientLight = new THREE.AmbientLight(0x333333);
       scene.add(ambientLight)
 
-      //设置定向光，设置颜色跟强度
+      //TODO 1设置定向光，设置颜色跟强度
       const directionalLight = new THREE.DirectionalLight(0xFFFFFF,0.8);
       scene.add(directionalLight);
       directionalLight.position.set(-30,50,0);
       directionalLight.castShadow = true;
+      directionalLight.shadow.camera.bottom = -12;
 
-      //添加定向光源辅助
+
+      // TODO 1添加定向光源辅助
       const dLightHelper = new THREE.DirectionalLightHelper(directionalLight,5);
       scene.add(dLightHelper)
-
+      //TODO 1
       const dLightShadowHelper = new THREE.CameraHelper(directionalLight.shadow.camera);
       scene.add(dLightShadowHelper)
 
