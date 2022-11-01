@@ -7,7 +7,8 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 import { render } from '@vue/runtime-dom';
 import * as dat from 'dat.gui'
-
+import start from './img/start.jpg'
+import starts2 from './img/starts2.jpg'
 
 export default {
   name: 'tubeOne',
@@ -114,9 +115,37 @@ export default {
       spotLight.castShadow = true;
       //缩小灯光
       spotLight.angle = 0.2;
-
+      //聚光辅助线
       const sLightHelper = new THREE.SpotLightHelper(spotLight);
       scene.add(sLightHelper)
+
+      //雾
+      // scene.fog = new THREE.Fog(0xFFFFFF,0,100)
+      scene.fog = new THREE.FogExp2(0xFFFFFF,0.01)
+
+
+      //设置图片背景图 --平面
+      const textureLoader = new THREE.TextureLoader();
+      scene.background = textureLoader.load(starts2)
+      //TODO     未生效  背景设置6个方向的图片
+      // let url = [
+      //   start,
+      //   start,
+      //   starts2,
+      //   starts2,
+      //   starts2,
+      //   starts2
+      // ]
+      // const cubeTextureLoader = new THREE.CubeTextureLoader().load(url);
+      // scene.background = cubeTextureLoader;
+
+      const box2Geometry = new THREE.BoxGeometry(4,4,4);
+      const box2Material = new THREE.MeshBasicMaterial({
+        map: textureLoader.load(start)
+      }) 
+      const box2 = new THREE.Mesh(box2Geometry,box2Material);
+      scene.add(box2)
+      box2.position.set(0,10,10)
 
 
       //添加球状图像控制器
