@@ -139,13 +139,42 @@ export default {
       // const cubeTextureLoader = new THREE.CubeTextureLoader().load(url);
       // scene.background = cubeTextureLoader;
 
+      //正方体的几何面贴图
       const box2Geometry = new THREE.BoxGeometry(4,4,4);
       const box2Material = new THREE.MeshBasicMaterial({
-        map: textureLoader.load(start)
+        // map: textureLoader.load(start)
       }) 
-      const box2 = new THREE.Mesh(box2Geometry,box2Material);
-      scene.add(box2)
-      box2.position.set(0,10,10)
+      //正方体几个面的设置
+      const box2MultiMaterial = [
+        new THREE.MeshBasicMaterial({map: textureLoader.load(start)}),
+        new THREE.MeshBasicMaterial({map: textureLoader.load(start)}),
+        new THREE.MeshBasicMaterial({map: textureLoader.load(starts2)}),
+        new THREE.MeshBasicMaterial({map: textureLoader.load(start)}),
+        new THREE.MeshBasicMaterial({map: textureLoader.load(starts2)}),
+        new THREE.MeshBasicMaterial({map: textureLoader.load(start)})
+      ]
+      const box2 = new THREE.Mesh(box2Geometry,box2MultiMaterial);
+      scene.add(box2);
+      box2.position.set(0,15,10);
+      //设置立方体名字
+      box2.name = 'try2';
+
+      //TODO图形4 设置网格
+      const plane2Geometry = new THREE.PlaneGeometry(10,10,10,10);
+      const plane2Material = new THREE.MeshLambertMaterial({
+        color: 0xFFFFFF,
+        wireframe:true
+      })
+      const plane2 = new THREE.Mesh(plane2Geometry,plane2Material)
+      scene.add(plane2)
+      plane2.position.set(10,10,15)
+      plane2.geometry.attributes.position.array[0] -=10*Math.random();
+      plane2.geometry.attributes.position.array[1] -=10*Math.random();
+      plane2.geometry.attributes.position.array[2] -=10*Math.random();
+      const lastPointZ = plane2.geometry.attributes.position.array.length -1;
+      plane2.geometry.attributes.position.array[lastPointZ] -=10*Math.random();
+
+
 
 
       //添加球状图像控制器
@@ -167,7 +196,6 @@ export default {
       })
       //弹跳速度第三个参数设置最小数，第四个参数设置上限
       gui.add(options,'speed',0,0.1)
-
       gui.add(options,'angle',0,1)
       gui.add(options,'penumbar',0,1);
       gui.add(options,'intensity',0,1)
@@ -175,6 +203,18 @@ export default {
     
      
       let step = 0;
+
+      //鼠标
+      const mousePosition = new THREE.Vector2();
+      window.addEventListener('mousemove',function(e){
+        mousePosition.x = (e.clientX/width)*2-1;
+        mousePosition.y = (e.clientY/height)*2+1
+      })
+      const rayCaster = new THREE.Raycaster();
+
+      //球体ID
+      const sphereId = sphere.id;
+      
       let animate=()=>{
         box.rotation.x +=0.01;
         box.rotation.y +=0.01;
@@ -182,11 +222,30 @@ export default {
         //设置球状物体弹跳速度
         step+=options.speed;
         sphere.position.y = 10*Math.abs(Math.sin(step))
-
+        //控制灯光等
         spotLight.angle = options.angle;
         spotLight.penumbra = options.penumbar;
         spotLight.intensity = options.intensity;
         sLightHelper.update()
+
+        //鼠标
+        rayCaster.setFromCamera(mousePosition,camera);
+        const intersects = rayCaster.intersectObjects(scene.children)
+        for(let i=0; i<intersects.length;i++){
+          if(intersects[i].object.id === sphereId){
+            intersects[i].object.material.color.set(0xFF0000);
+          }
+          if(intersects[i].object.name == 'try2') {
+            intersects[i].object.rotation.x +=0.01;
+            intersects[i].object.rotation.y +=0.01;
+          }
+        }
+        //TODO图4网格
+        plane2.geometry.attributes.position.array[0] =10*Math.random();
+        plane2.geometry.attributes.position.array[1] =10*Math.random();
+        plane2.geometry.attributes.position.array[2] =10*Math.random();
+        plane2.geometry.attributes.position.array[lastPointZ] =10*Math.random();
+        plane2.geometry.attributes.position.needsUpdate = true;
         renderer.render(scene,camera);
         renderer.setAnimationLoop(animate)
       }
