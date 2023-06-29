@@ -174,8 +174,22 @@ export default {
       const lastPointZ = plane2.geometry.attributes.position.array.length -1;
       plane2.geometry.attributes.position.array[lastPointZ] -=10*Math.random();
 
-
-
+      //
+      const sphere2Geometry = new THREE.SphereGeometry(4);
+      const vShader = `void main(){
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0);
+      }`;
+      const fShader = `void main(){
+        gl_FragColor = vec4(0.5,0.5,1.0,1.0);
+      }`;
+      
+      const sphere2Material = new THREE.ShaderMaterial({
+        vertexShader: vShader,
+        fragmentShader: fShader
+      })
+      const sphere2 = new THREE.Mesh(sphere2Geometry,sphere2Material)
+      scene.add(sphere2)
+      sphere2.position.set(-5,10,10)
 
       //添加球状图像控制器
       const gui = new dat.GUI();
@@ -248,10 +262,24 @@ export default {
         plane2.geometry.attributes.position.needsUpdate = true;
         renderer.render(scene,camera);
         renderer.setAnimationLoop(animate)
+        
       }
      animate()
-    }
+      // 页面缩放事件监听
+		window.addEventListener('resize', () => {
+		  width = document.getElementById('learn_one').clientWidth;
+      height = document.getElementById('learn_one').clientHeight;
+		  // 更新渲染
+		  renderer.setSize(width, height);
+		  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+		  // 更新相机
+		  camera.aspect = width / height;
+		  camera.updateProjectionMatrix();
+		});
+
+
   },
+ }
 }
 </script>
 

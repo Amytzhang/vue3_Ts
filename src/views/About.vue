@@ -218,6 +218,12 @@ export default {
       let getUserName:GetUserNameType = function(firstNmae:string,lastName:string):void {
       
       }
+      type keyin = 'a'|'b'|'c'
+      type keyOut = {
+        [key in keyin]:any
+      }
+      const keyOutb:keyOut ={a:'1',b:'2',c:'3'}
+      console.log('key in',keyOutb)
       //可选参数
       function print(name:string,age?:number):string {
         return name
