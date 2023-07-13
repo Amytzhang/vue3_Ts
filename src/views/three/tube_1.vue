@@ -9,6 +9,7 @@ import { render } from '@vue/runtime-dom';
 import * as dat from 'dat.gui'
 import start from './img/start.jpg'
 import starts2 from './img/starts2.jpg'
+import Stats from 'stats.js'
 
 export default {
   name: 'tubeOne',
@@ -228,7 +229,11 @@ export default {
 
       //球体ID
       const sphereId = sphere.id;
-      
+      const stats = new Stats()
+		  stats.dom.style.position = 'absolute';
+     	stats.dom.style.left = '0';
+     	stats.dom.style.top = '0';
+     	document.getElementById('learn_one').appendChild(stats.dom);
       let animate=()=>{
         box.rotation.x +=0.01;
         box.rotation.y +=0.01;
@@ -262,7 +267,9 @@ export default {
         plane2.geometry.attributes.position.needsUpdate = true;
         renderer.render(scene,camera);
         renderer.setAnimationLoop(animate)
-        
+        stats.begin();
+        // 执行你的更新逻辑
+        stats.end();
       }
      animate()
       // 页面缩放事件监听

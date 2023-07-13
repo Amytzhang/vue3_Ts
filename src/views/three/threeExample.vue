@@ -9,6 +9,7 @@
 
 import * as THREE from 'three';
 import {TrackballControls,CSS3DRenderer, CSS3DObject } from 'three';
+import Stats from 'three/examples/jsm/libs/stats.module'
 export default {
   name:'threeExample',
   data () {
@@ -33,16 +34,20 @@ export default {
 
 		// 初始化场景
 		const scene = new THREE.Scene();
-
+		const stats = new Stats()
+		stats.dom.style.position = 'absolute';
+     	stats.dom.style.left = '0';
+     	stats.dom.style.top = '0';
+     	canvas.appendChild(stats.dom);
 		// 初始化相机
 		const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-    camera.position.y = 2;
+        camera.position.y = 2;
 		camera.position.z = 5;
 		scene.add(camera);
 
 		//设置坐标辅助线
 		const axesHelper = new THREE.AxesHelper(5)
-    scene.add(axesHelper)
+        scene.add(axesHelper)
 
 		// 创建网格对象
 		var grid3=new THREE.GridHelper(30,30,0xf0f0f0,0xffffff);
@@ -66,6 +71,10 @@ export default {
 		  // 更新相机
 		  camera.aspect = sizes.width / sizes.height;
 		  camera.updateProjectionMatrix();
+		  stats.begin();
+          // 执行你的更新逻辑
+          stats.end();
+		  
 		});
 
 		// 动画
@@ -91,9 +100,9 @@ export default {
 
 <style scoped>
 .example{
-	width: 100%;
-	height: 100%;
-	overflow: hidden;
+  width: 500px;
+  height: 500px;
+  overflow: hidden;
 }
 .threeExample {
   position: relative;
