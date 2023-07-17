@@ -75,7 +75,7 @@
 <script lang="ts">
 import tryT from'./about'
 export default {
-  name: 'About',
+  name: 'TsBasis2',
   components: {
     
   },

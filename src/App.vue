@@ -51,8 +51,6 @@ interface routerMessage extends typeOne {
   children?:Array<typeOne>
 }
 const data:Array<routerMessage>=[
-  {path:'/home',name:'学习ts1',children:[{}]},
-  {path:'/about',name:'学习ts2',children:[{}]},
   {path:'/interview',name:'interview',children:[{}]},
   {path:'/slot',name:'插槽',children:[{}]},
   {path:'/virtual',name:'虚拟列表', children:[]},
@@ -79,7 +77,6 @@ const router = useRouter()
 const handleSelect = (key: string,indexPath:string) => {
   let index = Number(key)
   currentRoute.value = index
-  console.log(currentRoute)
   router.push({path:data[index].path})
 }
 const handleOpen = (key: string, keyPath: string[]) => {

@@ -14,13 +14,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import HelloWorld from '../components/HelloWorld.vue'; // @ is an alias to /src
+
 
 export default defineComponent({
-  name: 'Home',
-  components: {
-    HelloWorld,
-  },
+  name: 'TsBasis1',
+  
   setup(props, contex) {
   let interfaceFunction = (param?:any):void=>{
     //函数
@@ -135,7 +133,7 @@ $button_height:45px;
 }
  .home{
     width: 100%;
-    height: 100%;
+    height:100%;
     box-sizing: border-box;
     padding: 20px;
     display: flex;
